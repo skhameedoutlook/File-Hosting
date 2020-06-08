@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="icon" href="icons/the-folder.png" type="image/icon type">
+        <title>File Hosting</title>
+        <link rel="stylesheet" href="styles/bootstrap.min.css" /> 
+        <link rel="stylesheet" href="styles/style.css" type="text/css" />
+    </head>
+    <body>
+        <nav>
+            <input type="file" id="file" accept=".txt" />
+            <button onclick="uploadFile()">Upload</button>
+            <button onclick="createFolder()">Create Folder</button>
+        </nav>
+        <div style="display: block; height: 20px;"></div>
+        <div class="container-fluid" id="main-content">
+            <!-- <div class="row row-spacing">
+                <div class="col-sm">
+                    <img src="icons/the-file.png" class="center-hz" style= "width: 100px; height: 100px;">
+                    <p class="center-text">Waterfalls</p>
+                </div>
+                <div class="col-sm">
+                    <img src="icons/the-file.png" class="center-hz" style= "width: 100px; height: 100px;">
+                    <p class="center-text">Waterfalls</p>
+                </div>
+                <div class="col-sm">
+                    <img src="icons/the-file.png" class="center-hz" style= "width: 100px; height: 100px;">
+                    <p class="center-text">Waterfalls</p>
+                </div>
+            </div>
+            <div class="row row-spacing">
+                <div class="col-sm">
+                    <img src="icons/the-file.png" class="center-hz" style= "width: 100px; height: 100px;">
+                    <p class="center-text">Waterfalls</p>
+                </div>
+                <div class="col-sm">
+                    <img src="icons/the-file.png" class="center-hz" style= "width: 100px; height: 100px;">
+                    <p class="center-text">Waterfalls</p>
+                </div>
+                <div class="col-sm">
+                    <img src="icons/the-file.png" class="center-hz" style= "width: 100px; height: 100px;">
+                    <p class="center-text">Waterfalls</p>
+                </div>
+            </div> -->
+        </div>
+        <script src="scripts/script.js"></script>
+        <script>
+            var currentOpenFolder="root";
+            var AFile = function(filename="0", filesize="0", fileloc="0", content="") {
+                this.filename = filename;
+                this.filesize = filesize;
+                this.fileloc = fileloc;
+                this.content = content;
+            }
+            var AFolder = function(foldername="0", itemlist=[]) {
+                this.foldername = foldername;
+                this.itemlist = itemlist;
+                this.addItem = function(item) {
+                    itemlist.push(item);
+                }
+            }
+            var folderList = [new AFolder(currentOpenFolder, [])];
+            var Item = function(item, type) {
+                this.item = item;
+                this.type = type;
+            }
+            var uploadFile = function() {
+                console.log('Uploaded ' + document.getElementById('file').value);
+                document.getElementById('file').value = "";
+                // itemArray.push(new Item(new AFile(document.getElementById('file').value), 'file') );
+                for(var i = 0; i < folderList.length; i++) {
+                    if(folderList[i].foldername == currentOpenFolder) {
+                        folderList[i].addItem(new Item(new AFile(document.getElementById('file').value), 'file') );
+                    }
+                }
+                displayFolderContents();
+            }
+            var createFolder = function() {
+                console.log("Created a new folder");
+            }
+            var displayFolderContents = function() {
+                var totalHTML = "";
+                var rowHTML = "";
+                for(var i = 0; i < folderList.length; i++) {
+                    if(folderList[i].foldername == currentOpenFolder) {
+                        var theFolder = folderList[i];
+                        if(theFolder.itemlist.length > 0) {
+                            for(var j = 0; j < theFolder.itemlist.length(); j++) {
+                                var theItem = theFolder.itemlist[i];
+                                if(j % 3 == 0) {
+                                    totalHTML += rowHTML;
+                                    rowHTML = '<div class="row row-spacing"><div class="col-sm">';
+                                    if(theItem.type == "file") {
+                                        rowHTML += '<img src="icons/the-file.png" class="center-hz" style= "width: 100px; height: 100px;">';
+                                        rowHTML += '<p class="center-text">' + theItem.item.filename + '</p>';
+                                    }
+                                    else {
+                                        rowHTML += '<img src="icons/the-folder.png" class="center-hz" style= "width: 100px; height: 100px;">';
+                                        rowHTML += '<p class="center-text">' + theItem.item.foldername + '</p>';
+                                    }
+                                    if(j == theFolder.itemlist.length-1) {
+                                        rowHTML += '</div></div>';
+                                        totalHTML += rowHTML;
+                                    }
+                                    else {
+                                        rowHTML += '</div>';
+                                    }
+                                }
+                                else {
+                                    rowHTML = '<div class="col-sm">';
+                                        if(theItem.type == "file") {
+                                        rowHTML += '<img src="icons/the-file.png" class="center-hz" style= "width: 100px; height: 100px;">';
+                                        rowHTML += '<p class="center-text">' + theItem.item.filename + '</p>';
+                                    }
+                                    else {
+                                        rowHTML += '<img src="icons/the-folder.png" class="center-hz" style= "width: 100px; height: 100px;">';
+                                        rowHTML += '<p class="center-text">' + theItem.item.foldername + '</p>';
+                                    }
+                                    if(j == theFolder.itemlist.length-1) {
+                                        rowHTML += '</div></div>';
+                                        totalHTML += rowHTML;
+                                    }
+                                    else {
+                                        rowHTML += '</div>';
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+                document.getElementById('main-content').innerHTML = totalHTML;
+            }
+        </script>
+    </body>
+</html>
