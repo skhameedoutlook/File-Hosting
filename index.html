@@ -12,6 +12,7 @@
         <nav>
             <input type="file" id="file" accept=".txt" />
             <button onclick="uploadFile()">Upload</button>
+            <input type="text" id="folder-name" placeholder="Enter folder name" />
             <button onclick="createFolder()">Create Folder</button>
         </nav>
         <div style="display: block; height: 20px;"></div>
@@ -83,7 +84,19 @@
                 displayFolderContents();
             }
             var createFolder = function() {
-                console.log("Created a new folder");
+                console.log("Created a new folder " + document.getElementById('folder-name').value);
+                if(document.getElementById('folder-name').value == "") {
+                    alert("Please enter a folder name");
+                    return;
+                }
+                for(var i = 0; i < folderList.length; i++) {
+                    if(folderList[i].foldername == currentOpenFolder) {
+                        folderList[i].addItem(new Item(new AFolder(document.getElementById('folder-name').value), 'folder') );
+                        break;
+                    }
+                }
+                document.getElementById('folder-name').value = "";
+                displayFolderContents();
             }
             var displayFolderContents = function() {
                 var totalHTML = "";
