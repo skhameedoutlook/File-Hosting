@@ -58,7 +58,7 @@
                 this.foldername = foldername;
                 this.itemlist = itemlist;
                 this.addItem = function(item) {
-                    itemlist.push(item);
+                    this.itemlist.push(item);
                 }
             }
             var folderList = [new AFolder(currentOpenFolder, [])];
@@ -68,13 +68,18 @@
             }
             var uploadFile = function() {
                 console.log('Uploaded ' + document.getElementById('file').value);
-                document.getElementById('file').value = "";
+                if(document.getElementById('file').value == "") {
+                    alert("Please select a file");
+                    return;
+                }
                 // itemArray.push(new Item(new AFile(document.getElementById('file').value), 'file') );
                 for(var i = 0; i < folderList.length; i++) {
                     if(folderList[i].foldername == currentOpenFolder) {
                         folderList[i].addItem(new Item(new AFile(document.getElementById('file').value), 'file') );
+                        break;
                     }
                 }
+                document.getElementById('file').value = "";
                 displayFolderContents();
             }
             var createFolder = function() {
@@ -83,14 +88,15 @@
             var displayFolderContents = function() {
                 var totalHTML = "";
                 var rowHTML = "";
+                var theFolder;
                 for(var i = 0; i < folderList.length; i++) {
                     if(folderList[i].foldername == currentOpenFolder) {
                         var theFolder = folderList[i];
                         if(theFolder.itemlist.length > 0) {
-                            for(var j = 0; j < theFolder.itemlist.length(); j++) {
-                                var theItem = theFolder.itemlist[i];
+                            for(var j = 0; j < theFolder.itemlist.length; j++) {
+                                console.log(theFolder);
+                                var theItem = theFolder.itemlist[j];
                                 if(j % 3 == 0) {
-                                    totalHTML += rowHTML;
                                     rowHTML = '<div class="row row-spacing"><div class="col-sm">';
                                     if(theItem.type == "file") {
                                         rowHTML += '<img src="icons/the-file.png" class="center-hz" style= "width: 100px; height: 100px;">';
@@ -102,11 +108,11 @@
                                     }
                                     if(j == theFolder.itemlist.length-1) {
                                         rowHTML += '</div></div>';
-                                        totalHTML += rowHTML;
                                     }
                                     else {
                                         rowHTML += '</div>';
                                     }
+                                    totalHTML += rowHTML;
                                 }
                                 else {
                                     rowHTML = '<div class="col-sm">';
@@ -120,11 +126,16 @@
                                     }
                                     if(j == theFolder.itemlist.length-1) {
                                         rowHTML += '</div></div>';
-                                        totalHTML += rowHTML;
                                     }
                                     else {
-                                        rowHTML += '</div>';
+                                        if(j % 3 == 2) {
+                                            rowHTML += '</div></div>';
+                                        }
+                                        else {
+                                            rowHTML += '</div>';
+                                        }
                                     }
+                                    totalHTML += rowHTML;
                                 }
                             }
                         }
