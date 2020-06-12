@@ -17,10 +17,12 @@
         </nav>
         <div style="display: block; height: 20px;"></div>
         <div class="container-fluid" id="main-content">
-            <!-- <div class="row row-spacing">
-                <div class="col-sm">
-                    <img src="icons/the-file.png" class="center-hz" style= "width: 100px; height: 100px;">
-                    <p class="center-text">Waterfalls</p>
+            <div class="row row-spacing">
+                <div class="col-sm" >
+                    <div  class="center-hz col-sm-inner" onclick="f1()">
+                        <img src="icons/the-file.png" class="center-hz" style= "width: 70px; height: 70px; padding-top: 20px;">
+                        <p class="center-text">Waterfalls</p>
+                    </div>
                 </div>
                 <div class="col-sm">
                     <img src="icons/the-file.png" class="center-hz" style= "width: 100px; height: 100px;">
@@ -44,12 +46,15 @@
                     <img src="icons/the-file.png" class="center-hz" style= "width: 100px; height: 100px;">
                     <p class="center-text">Waterfalls</p>
                 </div>
-            </div> -->
+            </div>
         </div>
         <script src="scripts/script.js"></script>
         <script>
+            var f1 = function() {
+                alert("testing");
+            }
             var currentOpenFolder="root";
-            var AFile = function(filename="0", filesize="0", fileloc="0", content="") {
+            var AFile = function(filename="0",  fileloc="0", filesize="0", content="") {
                 this.filename = filename;
                 this.filesize = filesize;
                 this.fileloc = fileloc;
@@ -71,12 +76,16 @@
                 console.log('Uploaded ' + document.getElementById('file').value);
                 if(document.getElementById('file').value == "") {
                     alert("Please select a file");
-                    return;
+                    return;l
                 }
                 // itemArray.push(new Item(new AFile(document.getElementById('file').value), 'file') );
                 for(var i = 0; i < folderList.length; i++) {
                     if(folderList[i].foldername == currentOpenFolder) {
-                        folderList[i].addItem(new Item(new AFile(document.getElementById('file').value), 'file') );
+                        var tempstr = document.getElementById('file').value.split('\\');
+                        var filename = tempstr[tempstr.length-1];
+                        tempstr.pop();
+                        console.log(filename);
+                        folderList[i].addItem(new Item(new AFile(filename, tempstr.join('\\')), 'file' ));
                         break;
                     }
                 }
@@ -110,42 +119,42 @@
                                 console.log(theFolder);
                                 var theItem = theFolder.itemlist[j];
                                 if(j % 3 == 0) {
-                                    rowHTML = '<div class="row row-spacing"><div class="col-sm">';
+                                    rowHTML = '<div class="row row-spacing"><div class="col-sm"><div id="' + i + '-' + j + '" class="center-hz col-sm-inner">';
                                     if(theItem.type == "file") {
-                                        rowHTML += '<img src="icons/the-file.png" class="center-hz" style= "width: 100px; height: 100px;">';
+                                        rowHTML += '<img src="icons/the-file.png" class="center-hz" style= "width: 90px; height: 90px;">';
                                         rowHTML += '<p class="center-text">' + theItem.item.filename + '</p>';
                                     }
                                     else {
-                                        rowHTML += '<img src="icons/the-folder.png" class="center-hz" style= "width: 100px; height: 100px;">';
+                                        rowHTML += '<img src="icons/the-folder.png" class="center-hz" style= "width: 90px; height: 90px;">';
                                         rowHTML += '<p class="center-text">' + theItem.item.foldername + '</p>';
                                     }
                                     if(j == theFolder.itemlist.length-1) {
-                                        rowHTML += '</div></div>';
+                                        rowHTML += '</div></div></div>';
                                     }
                                     else {
-                                        rowHTML += '</div>';
+                                        rowHTML += '</div></div>';
                                     }
                                     totalHTML += rowHTML;
                                 }
                                 else {
-                                    rowHTML = '<div class="col-sm">';
+                                    rowHTML = '<div class="col-sm"><div id="' + i + '-' + j + '" class="center-hz col-sm-inner">';
                                         if(theItem.type == "file") {
-                                        rowHTML += '<img src="icons/the-file.png" class="center-hz" style= "width: 100px; height: 100px;">';
+                                        rowHTML += '<img src="icons/the-file.png" class="center-hz" style= "width: 90px; height: 90px;">';
                                         rowHTML += '<p class="center-text">' + theItem.item.filename + '</p>';
                                     }
                                     else {
-                                        rowHTML += '<img src="icons/the-folder.png" class="center-hz" style= "width: 100px; height: 100px;">';
+                                        rowHTML += '<img src="icons/the-folder.png" class="center-hz" style= "width: 90px; height: 90px;">';
                                         rowHTML += '<p class="center-text">' + theItem.item.foldername + '</p>';
                                     }
                                     if(j == theFolder.itemlist.length-1) {
-                                        rowHTML += '</div></div>';
+                                        rowHTML += '</div></div></div>';
                                     }
                                     else {
                                         if(j % 3 == 2) {
-                                            rowHTML += '</div></div>';
+                                            rowHTML += '</div></div></div>';
                                         }
                                         else {
-                                            rowHTML += '</div>';
+                                            rowHTML += '</div></div>';
                                         }
                                     }
                                     totalHTML += rowHTML;
