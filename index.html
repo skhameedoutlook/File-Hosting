@@ -13,15 +13,17 @@
             <form class="form-inline">
                 <button class="back-button btn btn-outline-success my-2 my-sm-0" onclick="goback(event)">&lt; Back</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="file" id="file" accept=".txt" />
+                <!-- <input type="file" id="file" accept=".txt" />
                 <button class="back-button btn btn-outline-success my-2 my-sm-0" onclick="uploadFile(event)">Upload File</button>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
                 <input class="form-control mr-sm-2" type="text" id="folder-name" type="search" placeholder="Enter folder name" aria-label="Search" />
                 <button class="back-button btn btn-outline-success my-2 my-sm-0" onclick="createFolder(event)">Create Folder</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 
               </form>
               <button type="button" data-toggle="modal" data-target="#FileCreateModel" class="back-button btn btn-outline-success my-2 my-sm-0">Create New File</button>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <button id="selectmodebutton" class="back-button btn btn-dark my-2 my-sm-0" onclick="toggleselectmode()">Select File Mode: Off</button>
               <div id="FileCreateModel" class="modal fade" role="dialog">
                 <div class="modal-dialog">
               

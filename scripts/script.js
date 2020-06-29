@@ -2,6 +2,7 @@ var currentOpenFolder="root";
 var currentDirectoryTracker = ["root"];
 var currentFolderIndex = 0;
 var currentFileIndex = -1;
+var selectmode = false;
 var goback = function(event) {
     preventformdefault(event);
     if(currentDirectoryTracker.length == 1) {
@@ -230,3 +231,17 @@ var SaveFileWithContent = function() {
 }
 
 
+var toggleselectmode = function() {
+    var theElement = document.getElementById("selectmodebutton");
+    if(!selectmode) {
+        theElement.classList.remove("btn-dark");
+        theElement.classList.add("btn-success");
+        theElement.innerHTML = "Select File Mode: On";
+    }
+    else {
+        theElement.classList.remove("btn-success");
+        theElement.classList.add("btn-dark");
+        theElement.innerHTML = "Select File Mode: Off";
+    }
+    selectmode = !selectmode;
+}
