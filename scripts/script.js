@@ -22,10 +22,10 @@ var openFileFolder = function(event, type) {
         displayFolderContents();
     }
 }
-var AFile = function(filename="0",  fileloc="0", filesize="0", content="") {
+var AFile = function(filename,  fileloc, filesize, content) {
     this.filename = filename;
-    this.filesize = filesize;
     this.fileloc = fileloc;
+    this.filesize = filesize;
     this.content = content;
 }
 var AFolder = function(foldername="0", itemlist=[]) {
@@ -167,4 +167,35 @@ var displayFolderContents = function() {
 
 var preventformdefault = function(event) {
     event.preventDefault();
+}
+
+
+var CreateFileWithContent = function(event) {
+    preventformdefault(event);
+    currentOpenFolder = currentDirectoryTracker[currentDirectoryTracker.length-1];
+    console.log("Creating a new file with content ");
+    var theFileName = document.getElementById("TheCFName").value;
+    var theFileContent = document.getElementById("TheCCTextArea").value;
+    var tempstr = currentDirectoryTracker;
+    // alert(theFileContent);
+    for(var i = 0; i < folderList.length; i++) {
+        
+        if(folderList[i].foldername == currentOpenFolder) {
+            // console.log(folderList[i]);
+            // var theFolder = new AFile(document.getElementById('folder-name').value);
+            // var theItem = new Item(theFolder);
+            // folderList[i].addItem(theItem);
+            // folderList.push(theFolder);
+            // console.log(folderList[i]);
+            var temp1 = theFileContent.length;
+            var temp2 = theFileContent;
+            folderList[i].addItem(new Item(new AFile( theFileName, tempstr.join('/'), temp1, temp2), 'file'));
+            // alert(temp1+ " : " + temp2);
+            break;
+        }
+    }
+    document.getElementById("TheCFName").value = "";
+    document.getElementById("TheCCTextArea").value = "";
+    document.getElementById('folder-name').value = "";
+    displayFolderContents();
 }
