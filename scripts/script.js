@@ -9,6 +9,7 @@ var goback = function(event) {
     if(currentDirectoryTracker.length == 1) {
         return;
     }
+    selectedList = [];
     currentDirectoryTracker.pop();
     displayFolderContents();
 }
