@@ -1,5 +1,7 @@
 var currentOpenFolder="root";
 var currentDirectoryTracker = ["root"];
+var currentFolderIndex = 0;
+var currentFileIndex = -1;
 var goback = function(event) {
     preventformdefault(event);
     if(currentDirectoryTracker.length == 1) {
@@ -10,7 +12,13 @@ var goback = function(event) {
 }
 var openFileFolder = function(event, type) {
     if(type == "file") {
-        alert("File. testing ." + event.currentTarget.id);
+        // alert("File. testing ." + event.currentTarget.id);
+        var temp = event.currentTarget.id.split("-");
+        currentFolderIndex = temp[0];
+        currentFileIndex = temp[1];
+        // alert(temp[0] + " " + temp[1] + folderList[folderIndex].itemlist[fileIndex].item.content);
+        document.getElementById("TheCTextArea").value = folderList[currentFolderIndex].itemlist[currentFileIndex].item.content;
+        EditFileWithContent();
     }
     else {
         var tempstr = event.currentTarget.id.split('-')
@@ -176,6 +184,10 @@ var CreateFileWithContent = function(event) {
     console.log("Creating a new file with content ");
     var theFileName = document.getElementById("TheCFName").value;
     var theFileContent = document.getElementById("TheCCTextArea").value;
+    if(theFileName.length == 0) {
+        alert("File name should not be empty");
+        return;
+    }
     var tempstr = currentDirectoryTracker;
     // alert(theFileContent);
     for(var i = 0; i < folderList.length; i++) {
@@ -197,5 +209,24 @@ var CreateFileWithContent = function(event) {
     document.getElementById("TheCFName").value = "";
     document.getElementById("TheCCTextArea").value = "";
     document.getElementById('folder-name').value = "";
+    $('#FileCreateModel').modal('toggle');
     displayFolderContents();
 }
+
+
+var EditFileWithContent = function() {
+    console.log("Editing file with content ");
+    // alert(theFileContent);
+    $('#FileEditModel').modal('toggle');
+    // alert("Done!");
+}
+
+var SaveFileWithContent = function() {
+    preventformdefault(event);
+    folderList[currentFolderIndex].itemlist[currentFileIndex].item.content = document.getElementById("TheCTextArea").value;
+    document.getElementById("TheCTextArea").value = "";
+    $('#FileEditModel').modal('toggle');
+    displayFolderContents();
+}
+
+

@@ -42,17 +42,43 @@
                               <label for="TheCCTextArea">Conent</label>
                               <textarea class="form-control" id="TheCCTextArea" rows="3"></textarea>
                             </div>
-                            <button onclick="CreateFileWithContent(event)" class="btn btn-success">Create File</button>
+                            <button onclick="CreateFileWithContent(event)" class="btn btn-primary">Create File</button>
                           </form>
                     </div>
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
+                    </div> -->
                   </div>
               
                 </div>
               </div>
             
+              <div id="FileEditModel" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+              
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      
+                      <h4 class="modal-title">Editing: File Name</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                              <label for="TheCTextArea">Conent</label>
+                              <textarea class="form-control" id="TheCTextArea" rows="3"></textarea>
+                            </div>
+                            <button onclick="SaveFileWithContent(event)" class="btn btn-primary">Save File</button>
+                          </form>
+                    </div>
+                    <!-- <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div> -->
+                  </div>
+              
+                </div>
+              </div>
             
         </nav>
         <div style="display: block; height: 20px;"></div>
@@ -66,7 +92,7 @@
             </nav>
             <div id="main-content"> 
                 <div style="display: block; width: 75%; margin-top: 140px; margin-left: auto; margin-right: auto; text-align: center;">
-                    <h1>Create Or Upload Text Files, or create folders and save your data.</h1>
+                    <h1>Create or edit Text files, or create folders and organize or save your data.</h1>
                     <!-- <div style="display: block; margin-left: 0; margin-top: 30px;">
                         <ul style="text-align: left;">
                             <h3>Done</h3>
