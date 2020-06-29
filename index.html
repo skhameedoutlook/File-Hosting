@@ -23,7 +23,9 @@
               </form>
               <button type="button" data-toggle="modal" data-target="#FileCreateModel" class="back-button btn btn-outline-success my-2 my-sm-0">Create New File</button>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <button id="selectmodebutton" class="back-button btn btn-dark my-2 my-sm-0" onclick="toggleselectmode()">Select File Mode: Off</button>
+              <button id="selectmodebutton" class="back-button btn btn-dark my-2 my-sm-0"  onclick="toggleselectmode()">Select File Mode: Off</button>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <button style="display: none;" id="deletebutton" class="back-button btn btn-dark my-2 my-sm-0"  onclick="deleteselected()">Delete Selected</button>
               <div id="FileCreateModel" class="modal fade" role="dialog">
                 <div class="modal-dialog">
               
@@ -148,6 +150,7 @@
         </div>
         <script src="scripts/jquery.min.js"></script>
         <script src="scripts/bootstrap.min.js"></script>
+        <script src="scripts/bootstrap.bundle.min.js"></script>
         <script src="scripts/script.js"></script>
         <script></script>
     </body>

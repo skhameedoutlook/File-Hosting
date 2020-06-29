@@ -3,6 +3,7 @@ var currentDirectoryTracker = ["root"];
 var currentFolderIndex = 0;
 var currentFileIndex = -1;
 var selectmode = false;
+var selectedList = [];
 var goback = function(event) {
     preventformdefault(event);
     if(currentDirectoryTracker.length == 1) {
@@ -98,6 +99,10 @@ var createFolder = function(event) {
     displayFolderContents();
 }
 var displayFolderContents = function() {
+    if(selectmode) {
+        displayFolderContentsSelect();
+        return;
+    }
     currentOpenFolder = currentDirectoryTracker[currentDirectoryTracker.length-1];
     var totalHTML = "";
     var rowHTML = "";
@@ -112,12 +117,12 @@ var displayFolderContents = function() {
                     if(j % 3 == 0) {
                         rowHTML = '<div class="row row-spacing"><div class="col-sm">';
                         if(theItem.type == "file") {
-                            rowHTML += '<div id="' + i + '-' + j + '" class="center-hz col-sm-inner" onclick="openFileFolder(event, \'file\')">';
-                            rowHTML += '<img src="icons/the-file.png" class="center-hz" style= "width: 90px; height: 90px;">';
+                            rowHTML += '<div id="' + i + '-' + j + '" class="center-hz col-sm-inner" data-toggle="tooltip" data-html="true" data-placement="top" title="<h1>Test</h1>Tooltip on top" onclick="openFileFolder(event, \'file\')">';
+                            rowHTML += '<img src="icons/the-file.png" class="center-hz" style= "width: 90px; height: 90px;" >';
                             rowHTML += '<p class="center-text">' + theItem.item.filename + '</p>';
                         }
                         else {
-                            rowHTML += '<div id="' + i + '-' + j + '" class="center-hz col-sm-inner" onclick="openFileFolder(event, \'folder\')"">';
+                            rowHTML += '<div id="' + i + '-' + j + '" class="center-hz col-sm-inner" data-toggle="tooltip" data-html="true" data-placement="top" title="<h1>Test</h1>Tooltip on top" onclick="openFileFolder(event, \'folder\')"">';
                             rowHTML += '<img src="icons/the-folder.png" class="center-hz" style= "width: 90px; height: 90px;">';
                             // alert('<img src="icons/the-folder.png" class="center-hz" style= "width: 90px; height: 90px;">');
                             rowHTML += '<p class="center-text">' + theItem.item.foldername + '</p>';
@@ -133,12 +138,12 @@ var displayFolderContents = function() {
                     else {
                         rowHTML = '<div class="col-sm">';
                         if(theItem.type == "file") {
-                            rowHTML += '<div id="' + i + '-' + j + '" class="center-hz col-sm-inner" onclick="openFileFolder(event, \'file\')">';
+                            rowHTML += '<div id="' + i + '-' + j + '" class="center-hz col-sm-inner" data-toggle="tooltip" data-html="true" data-placement="top" title="<h1>Test</h1>Tooltip on top" onclick="openFileFolder(event, \'file\')">';
                             rowHTML += '<img src="icons/the-file.png" class="center-hz" style= "width: 90px; height: 90px;">';
                             rowHTML += '<p class="center-text">' + theItem.item.filename + '</p>';
                         }
                         else {
-                            rowHTML += '<div id="' + i + '-' + j  + '" class="center-hz col-sm-inner" onclick="openFileFolder(event, \'folder\')">';
+                            rowHTML += '<div id="' + i + '-' + j  + '" class="center-hz col-sm-inner" data-toggle="tooltip" data-html="true" data-placement="top" title="<h1>Test</h1>Tooltip on top" onclick="openFileFolder(event, \'folder\')">';
                             rowHTML += '<img src="icons/the-folder.png" class="center-hz" style= "width: 90px; height: 90px;">';
                             rowHTML += '<p class="center-text">' + theItem.item.foldername + '</p>';
                         }
@@ -244,4 +249,149 @@ var toggleselectmode = function() {
         theElement.innerHTML = "Select File Mode: Off";
     }
     selectmode = !selectmode;
+    if(!selectmode) {
+        selectedList = [];
+        document.getElementById("deletebutton").style.display = "none";
+    }
+    else {
+        document.getElementById("deletebutton").style.display = "block";
+    }
+    displayFolderContents();
+}
+
+var displayFolderContentsSelect = function() {
+    currentOpenFolder = currentDirectoryTracker[currentDirectoryTracker.length-1];
+    var totalHTML = "";
+    var rowHTML = "";
+    var theFolder;
+    for(var i = 0; i < folderList.length; i++) {
+        if(folderList[i].foldername == currentOpenFolder) {
+            var theFolder = folderList[i];
+            if(theFolder.itemlist.length > 0) {
+                for(var j = 0; j < theFolder.itemlist.length; j++) {
+                    console.log(theFolder);
+                    var theItem = theFolder.itemlist[j];
+                    if(j % 3 == 0) {
+                        rowHTML = '<div class="row row-spacing"><div class="col-sm">';
+                        if(theItem.type == "file") {
+                            rowHTML += '<div id="' + i + '-' + j + '" class="center-hz col-sm-inner" data-toggle="tooltip" data-html="true" data-placement="top" title="<h1>Test</h1>Tooltip on top" onclick="selectFileFolder(event)">';
+                            rowHTML += '<img src="icons/the-file.png" class="center-hz" style= "width: 90px; height: 90px;" >';
+                            rowHTML += '<p class="center-text">' + theItem.item.filename + '</p>';
+                        }
+                        else {
+                            rowHTML += '<div id="' + i + '-' + j + '" class="center-hz col-sm-inner" data-toggle="tooltip" data-html="true" data-placement="top" title="<h1>Test</h1>Tooltip on top" onclick="selectFileFolder(event)"">';
+                            rowHTML += '<img src="icons/the-folder.png" class="center-hz" style= "width: 90px; height: 90px;">';
+                            // alert('<img src="icons/the-folder.png" class="center-hz" style= "width: 90px; height: 90px;">');
+                            rowHTML += '<p class="center-text">' + theItem.item.foldername + '</p>';
+                        }
+                        if(j == theFolder.itemlist.length-1) {
+                            rowHTML += '</div></div></div>';
+                        }
+                        else {
+                            rowHTML += '</div></div>';
+                        }
+                        totalHTML += rowHTML;
+                    }
+                    else {
+                        rowHTML = '<div class="col-sm">';
+                        if(theItem.type == "file") {
+                            rowHTML += '<div id="' + i + '-' + j + '" class="center-hz col-sm-inner" data-toggle="tooltip" data-html="true" data-placement="top" title="<h1>Test</h1>Tooltip on top" onclick="selectFileFolder(event)">';
+                            rowHTML += '<img src="icons/the-file.png" class="center-hz" style= "width: 90px; height: 90px;">';
+                            rowHTML += '<p class="center-text">' + theItem.item.filename + '</p>';
+                        }
+                        else {
+                            rowHTML += '<div id="' + i + '-' + j  + '" class="center-hz col-sm-inner" data-toggle="tooltip" data-html="true" data-placement="top" title="<h1>Test</h1>Tooltip on top" onclick="selectFileFolder(event)">';
+                            rowHTML += '<img src="icons/the-folder.png" class="center-hz" style= "width: 90px; height: 90px;">';
+                            rowHTML += '<p class="center-text">' + theItem.item.foldername + '</p>';
+                        }
+                        if(j == theFolder.itemlist.length-1) {
+                            rowHTML += '</div></div></div>';
+                        }
+                        else {
+                            if(j % 3 == 2) {
+                                rowHTML += '</div></div></div>';
+                            }
+                            else {
+                                rowHTML += '</div></div>';
+                            }
+                        }
+                        totalHTML += rowHTML;
+                    }
+                }
+            }
+            break;
+        }
+    }
+    document.getElementById('main-content').innerHTML = totalHTML;
+    var theNavContents = "";
+    for(var i = 0; i < currentDirectoryTracker.length; i++) {
+        if(i == currentDirectoryTracker.length-1) {
+            theNavContents += currentDirectoryTracker[i];
+        }
+        else {
+            theNavContents += currentDirectoryTracker[i] + " > ";
+        }
+    }
+    // console.log(theNavContents);
+    document.getElementById('loc-nav-body').innerHTML = theNavContents;
+}
+
+var selectFileFolder = function(event) {
+    // alert("Selected " + event.currentTarget.id);
+    var found = false;
+    for(var i = 0; i < selectedList.length; i++) {
+        if(selectedList[i] == event.currentTarget.id) {
+            found = true;
+            break;
+        }
+    }
+    if(!found) {
+        selectedList.push(event.currentTarget.id);
+    }
+}
+
+var deleteselected = function() {
+    var currentDirectory = currentDirectoryTracker[currentDirectoryTracker.length-1];
+    for(var i = 0; i < selectedList.length; i++) {
+        var temp = selectedList[i].split("-");
+        var folderIndex = temp[0];
+        var fileIndex = temp[1];
+        if(folderList[folderIndex].itemlist[fileIndex].type == "file") {
+            folderList[folderIndex].itemlist[fileIndex].item.filename = "-1";
+        }
+        else {
+            folderList[folderIndex].itemlist[fileIndex].item.foldername = "-1";
+        }
+    }
+    deleteminus1s(currentDirectory);
+}
+
+var deleteminus1s = function(currentDirectory) {
+    for(var i = 0; i < folderList.length; i++) {
+        if(folderList[i].foldername == "-1") {
+            folderList.splice(i, 1);
+            i--;
+        }
+    }
+    for(var i = 0; i < folderList.length; i++) {
+        if(folderList[i].foldername == currentDirectory) {
+            for(var j = 0; j < folderList[i].itemlist.length; j++) {
+                if(folderList[i].itemlist[j].type == "file") {
+                    if(folderList[i].itemlist[j].item.filename == "-1") {
+                        folderList[i].itemlist.splice(j, 1);
+                        // j--;
+                    }
+                }
+                else {
+                    if(folderList[i].itemlist[j].item.foldername == "-1") {
+                        folderList[i].itemlist.splice(j, 1);
+                        // j--;
+                    }
+                }
+            }
+            break;
+        }
+    }
+    selectedList = [];
+    displayFolderContents();
 }
