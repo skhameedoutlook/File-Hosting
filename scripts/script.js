@@ -342,11 +342,16 @@ var selectFileFolder = function(event) {
     for(var i = 0; i < selectedList.length; i++) {
         if(selectedList[i] == event.currentTarget.id) {
             found = true;
+            selectedList.splice(i, 1);
+            document.getElementById(event.currentTarget.id).classList.remove("col-sm-inner-hover");
+            document.getElementById(event.currentTarget.id).classList.add("col-sm-inner");
             break;
         }
     }
     if(!found) {
         selectedList.push(event.currentTarget.id);
+        document.getElementById(event.currentTarget.id).classList.remove("col-sm-inner");
+        document.getElementById(event.currentTarget.id).classList.add("col-sm-inner-hover");
     }
 }
 
