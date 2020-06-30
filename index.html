@@ -11,7 +11,17 @@
     <body class="bg-light">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <form class="form-inline">
-                <button class="back-button btn btn-success my-2 my-sm-0" onclick="goback(event)">&lt; Back</button>
+                <button class="back-button btn btn-success my-2 my-sm-0" onclick="goback(event)">
+                  <!-- &lt; -->
+                  <svg style="margin-bottom: 3px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.646 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L6.207 7.5H11a.5.5 0 0 1 0 1H6.207l2.147 2.146z"/>
+                  </svg>
+                  <!-- <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path fill-rule="evenodd" d="M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z"/>
+                    <path fill-rule="evenodd" d="M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z"/>
+                  </svg> -->
+                  Back</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <!-- <input type="file" id="file" accept=".txt" />
                 <button class="back-button btn btn-outline-success my-2 my-sm-0" onclick="uploadFile(event)">Upload File</button>
@@ -36,7 +46,16 @@
                 </svg>
               </button>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <button id="selectmodebutton" class="back-button btn btn-dark my-2 my-sm-0"  onclick="toggleselectmode()">Select File Mode: Off</button>
+              <button id="selectmodebutton" class="back-button btn btn-dark my-2 my-sm-0"  onclick="toggleselectmode()">Select Mode
+                <!-- : Off -->
+                <!-- &nbsp; -->
+                <span id="selectmodeicon">
+                  &nbsp;
+                  <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-toggle-off" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M11 4a4 4 0 0 1 0 8H8a4.992 4.992 0 0 0 2-4 4.992 4.992 0 0 0-2-4h3zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5z"/>
+                  </svg>
+                </span>
+              </button>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <button style="display: none;" id="deletebutton" class="back-button btn btn-dark my-2 my-sm-0"  onclick="deleteselected()">Delete Selected</button>
               <div id="FileCreateModel" class="modal fade" role="dialog">

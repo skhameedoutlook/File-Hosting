@@ -5,6 +5,8 @@ var currentFileIndex = -1;
 var selectmode = false;
 var selectedList = [];
 var currentViewMode = "grid";
+var toggleoff = '<span id="selectmodeicon">&nbsp;&nbsp;&nbsp;<svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-toggle-off" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11 4a4 4 0 0 1 0 8H8a4.992 4.992 0 0 0 2-4 4.992 4.992 0 0 0-2-4h3zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5z"/>/svg></span>';
+var toggleon = '<span id="selectmodeicon">&nbsp;&nbsp;&nbsp;<svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-toggle-on" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10H5zm6 9a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg></span>';
 var goback = function(event) {
     preventformdefault(event);
     if(currentDirectoryTracker.length == 1) {
@@ -247,12 +249,14 @@ var toggleselectmode = function() {
     if(!selectmode) {
         theElement.classList.remove("btn-dark");
         theElement.classList.add("btn-success");
-        theElement.innerHTML = "Select File Mode: On";
+        theElement.innerHTML = "Select Mode" + toggleon;
+        // document.getElementById("selectmodeicon").innerHTML = toggleon;
     }
     else {
         theElement.classList.remove("btn-success");
         theElement.classList.add("btn-dark");
-        theElement.innerHTML = "Select File Mode: Off";
+        theElement.innerHTML = "Select Mode" + toggleoff;
+        // document.getElementById("selectmodeicon").innerHTML = toggleoff;
     }
     selectmode = !selectmode;
     if(!selectmode) {
