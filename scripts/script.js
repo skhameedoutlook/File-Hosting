@@ -4,6 +4,8 @@ var currentFolderIndex = 0;
 var currentFileIndex = -1;
 var selectmode = false;
 var selectedList = [];
+var resultarray = [];
+var resultarrayindices = [];
 var currentViewMode = "grid";
 var toggleoff = '<span id="selectmodeicon">&nbsp;&nbsp;&nbsp;<svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-toggle-off" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11 4a4 4 0 0 1 0 8H8a4.992 4.992 0 0 0 2-4 4.992 4.992 0 0 0-2-4h3zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5z"/>/svg></span>';
 var toggleon = '<span id="selectmodeicon">&nbsp;&nbsp;&nbsp;<svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-toggle-on" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10H5zm6 9a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg></span>';
@@ -553,4 +555,70 @@ var setgridview = function() {
     document.getElementById("gridviewbutton").classList.add("grid-or-list-inset");
     document.getElementById("listviewbutton").classList.remove("grid-or-list-inset");
     displayFolderContents();
+}
+
+var searchAndDisplayResults = function() {
+    resultarray = [];
+    resultarrayindices = [];
+    var query = document.getElementById("query").value.toUpperCase();
+    if(query.length == 0) {
+        document.getElementById("listindropdown").innerHTML = "";
+        return;
+    }
+    for(var i = 0; i < folderList.length; i++) {
+        if(folderList[i].foldername == currentOpenFolder) {
+            var theFolder = folderList[i];
+            for(var j = 0; j < theFolder.itemlist.length; j++) {
+                var theItem = theFolder.itemlist[j];
+                if(theItem.type == 'file') {
+                    if(theItem.item.filename.toUpperCase().includes(query)) {
+                        console.log(theItem.item.filename.toUpperCase() + " includes " + query);
+                        resultarray.push(theItem);
+                        resultarrayindices.push(i+"-"+j);
+                    }
+                }
+                else {
+                    if(theItem.item.foldername.toUpperCase().includes(query)) {
+                        console.log(theItem.item.foldername.toUpperCase() + " includes " + query);
+                        resultarray.push(theItem);
+                        resultarrayindices.push(i+"-"+j);
+                    }
+                }
+                if(resultarray.length >= 5) {
+                    break;
+                }
+            }
+            break;
+        }
+    }
+    if(resultarray.length == 0) {
+        document.getElementById("listindropdown").innerHTML = "<a>No results found.</a>";
+        return;
+    }
+    var totalHTML = "";
+    var rowHTML = "";
+    var theFolder;
+                // alert("Here " + theFolder.itemlist.length);
+    for(var x = 0; x < resultarray.length; x++) {
+        console.log(theFolder);
+        var theItem = resultarray[x];
+        var temp = resultarrayindices[i].split("-");
+        var i = temp[0];
+        var j = temp[1];
+        if(theItem.type == "file") {
+            rowHTML += '<li id="' + i + '-' + j + '" class="list-group-item list-hover-1" onclick="openFileFolder(event, \'file\')" ><img src="icons/the-file.png" width="30px" height="30px" />&nbsp;&nbsp;&nbsp;&nbsp;'+ theItem.item.filename+'</li>';
+        }
+        else {
+            rowHTML += '<li id="' + i + '-' + j + '" class="list-group-item list-hover-1" onclick="openFileFolder(event, \'folder\')"><img src="icons/the-folder.png" width="30px" height="30px" />&nbsp;&nbsp;&nbsp;&nbsp;'+ theItem.item.foldername+ '</li>';
+        }
+    }
+    totalHTML = rowHTML;
+    // alert(rowHTML);
+    document.getElementById("listindropdown").innerHTML = totalHTML;
+    // alert(totalHTML);
+}
+
+var setqueryempty = function() {
+    document.getElementById("query").value = "";
+    searchAndDisplayResults();
 }
