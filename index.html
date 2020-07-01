@@ -21,24 +21,46 @@
                     <path fill-rule="evenodd" d="M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z"/>
                     <path fill-rule="evenodd" d="M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z"/>
                   </svg> -->
-                  Back</button>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </button>
+
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
                 <!-- <input type="file" id="file" accept=".txt" />
                 <button class="back-button btn btn-outline-success my-2 my-sm-0" onclick="uploadFile(event)">Upload File</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                <input class="form-control mr-sm-2" type="text" id="folder-name" type="search" placeholder="Enter folder name" aria-label="Search" />
-                <button class="back-button btn btn-success my-2 my-sm-0" onclick="createFolder(event)">Create Folder</button>
+                <input style="border-radius: 2px; width: 160px;" class="form-control mr-sm-2" type="text" id="folder-name" type="search" placeholder="Enter folder name" aria-label="Search" />
+                <button class="back-button btn btn-success my-2 my-sm-0" onclick="createFolder(event)">New Folder</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 
+                <button type="button" data-toggle="modal" data-target="#FileCreateModel" class="back-button btn btn-success my-2 my-sm-0">New File</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+              
+              <div class="dropdown">
+                <input style="border-radius: 2px; width: 400px;" class="form-control mr-sm-2" type="text" id="folder-name" type="search" placeholder="Search in this directory" aria-label="Search" />
+                <div class="dropdown-content">
+                  <!-- <a>Link 1</a>
+                  <a>Link 2</a>
+                  <a>Link 3</a> -->
+                  <!-- <ul class="list-group" style="margin-top: 50px;"> -->
+                    <li class="list-group-item list-hover-1" onclick="openFileFolder(event, 'file')" ><img src="icons/the-file.png" width="30px" height="30px" />&nbsp;&nbsp;&nbsp;&nbsp; justo odio</li>
+                    <li class="list-group-item list-hover-1" onclick="openFileFolder(event, 'file')"><img src="icons/the-file.png" width="30px" height="30px" />&nbsp;&nbsp;&nbsp;&nbsp; justo odio</li>
+                    <li class="list-group-item list-hover-1" onclick="openFileFolder(event, 'folder')"><img src="icons/the-folder.png" width="30px" height="30px" />&nbsp;&nbsp;&nbsp;&nbsp; justo odio</li>
+                    <li class="list-group-item list-hover-1" onclick="openFileFolder(event, 'file')"><img src="icons/the-file.png" width="30px" height="30px" />&nbsp;&nbsp;&nbsp;&nbsp; justo odio</li>
+                    <li class="list-group-item list-hover-1" onclick="openFileFolder(event, 'folder')"><img src="icons/the-folder.png" width="30px" height="30px" />&nbsp;&nbsp;&nbsp;&nbsp; justo odio</li>
+                  <!-- </ul> -->
+                </div>
+              </div>
+                
               </form>
-              <button type="button" data-toggle="modal" data-target="#FileCreateModel" class="back-button btn btn-success my-2 my-sm-0">Create New File</button>
+              
+              
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <button id="gridviewbutton" style="border-radius: 0;" class="grid-or-list-inset back-button btn btn-primary my-2 my-sm-0"  onclick="setgridview()">
+              <button  id="gridviewbutton" style="border-radius: 0; float: right;" class="grid-or-list-inset back-button btn btn-primary my-2 my-sm-0"  onclick="setgridview()">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-grid-1x2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M6 1H1v14h5V1zm9 0h-5v5h5V1zm0 9h-5v5h5v-5zM0 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm9 0a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V1zm1 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1h-5z"/>
                 </svg>
               </button>
-              <button id="listviewbutton" style="border-radius: 0;" class="back-button btn btn-primary my-2 my-sm-0"  onclick="setlistview()">
+              <button  id="listviewbutton" style="border-radius: 0; float: right;" class="back-button btn btn-primary my-2 my-sm-0"  onclick="setlistview()">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list-task" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z"/>
                   <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
@@ -46,7 +68,7 @@
                 </svg>
               </button>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <button id="selectmodebutton" class="back-button btn btn-dark my-2 my-sm-0"  onclick="toggleselectmode()">Select Mode
+              <button id="selectmodebutton" style="float: right;" class="back-button btn btn-dark my-2 my-sm-0"  onclick="toggleselectmode()">Select Mode
                 <!-- : Off -->
                 <!-- &nbsp; -->
                 <span id="selectmodeicon">
@@ -57,7 +79,7 @@
                 </span>
               </button>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <button style="display: none;" id="deletebutton" class="back-button btn btn-dark my-2 my-sm-0"  onclick="deleteselected()">Delete Selected</button>
+              <button style="display: none; float: right;" id="deletebutton" class="back-button btn btn-dark my-2 my-sm-0"  onclick="deleteselected()">Delete Selected</button>
               <div id="FileCreateModel" class="modal fade" role="dialog">
                 <div class="modal-dialog">
               
@@ -115,8 +137,10 @@
               
                 </div>
               </div>
+              
             
         </nav>
+        
         <div style="display: block; height: 20px;"></div>
         
        
