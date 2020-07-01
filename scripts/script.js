@@ -419,18 +419,18 @@ var deleteminus1s = function(currentDirectory) {
         }
     }
     for(var i = 0; i < folderList.length; i++) {
-        if(folderList[i].foldername == currentDirectory) {
+        if(folderList[i].foldername == currentDirectory && folderList[i].folderloc==currentDirectoryTracker.slice(0, currentDirectoryTracker.length-1).join("/")) {
             for(var j = 0; j < folderList[i].itemlist.length; j++) {
                 if(folderList[i].itemlist[j].type == "file") {
                     if(folderList[i].itemlist[j].item.filename == "-1") {
                         folderList[i].itemlist.splice(j, 1);
-                        // j--;
+                        j--;
                     }
                 }
                 else {
                     if(folderList[i].itemlist[j].item.foldername == "-1") {
                         folderList[i].itemlist.splice(j, 1);
-                        // j--;
+                        j--;
                     }
                 }
             }
