@@ -26,6 +26,8 @@ var openFileFolder = function(event, type) {
         currentFileIndex = temp[1];
         // alert(temp[0] + " " + temp[1] + folderList[folderIndex].itemlist[fileIndex].item.content);
         document.getElementById("TheCTextArea").value = folderList[currentFolderIndex].itemlist[currentFileIndex].item.content;
+        document.getElementById("listindropdown").innerHTML = "";
+        document.getElementById("query").value = "";
         EditFileWithContent();
     }
     else {
@@ -35,6 +37,8 @@ var openFileFolder = function(event, type) {
         // alert(folderList[folderIndex].itemlist[itemIndex].item.foldername);
         currentOpenFolder = folderList[folderIndex].itemlist[itemIndex].item.foldername;
         currentDirectoryTracker.push(currentOpenFolder);
+        document.getElementById("listindropdown").innerHTML = "";
+        document.getElementById("query").value = "";
         displayFolderContents();
     }
 }
@@ -44,9 +48,10 @@ var AFile = function(filename,  fileloc, filesize, content) {
     this.filesize = filesize;
     this.content = content;
 }
-var AFolder = function(foldername="0", itemlist=[]) {
+var AFolder = function(foldername="0", itemlist=[], folderloc) {
     this.foldername = foldername;
     this.itemlist = itemlist;
+    this.folderloc = folderloc
     this.addItem = function(item) {
         if(this.itemlist.length == 0) {
             this.itemlist = [item];
@@ -54,7 +59,7 @@ var AFolder = function(foldername="0", itemlist=[]) {
         else this.itemlist.push(item);
     }
 }
-var folderList = [new AFolder(currentOpenFolder, [])];
+var folderList = [new AFolder(currentOpenFolder, [], "")];
 var Item = function(item, type) {
     this.item = item;
     this.type = type;
@@ -69,7 +74,7 @@ var uploadFile = function(event) {
     }
     // itemArray.push(new Item(new AFile(document.getElementById('file').value), 'file') );
     for(var i = 0; i < folderList.length; i++) {
-        if(folderList[i].foldername == currentOpenFolder) {
+        if(folderList[i].foldername == currentOpenFolder && folderList[i].folderloc==currentDirectoryTracker.slice(0, currentDirectoryTracker.length-1).join("/")) {
             var tempstr = document.getElementById('file').value.split('\\');
             var filename = tempstr[tempstr.length-1];
             tempstr.pop();
@@ -91,9 +96,9 @@ var createFolder = function(event) {
     }
     for(var i = 0; i < folderList.length; i++) {
         
-        if(folderList[i].foldername == currentOpenFolder) {
+        if(folderList[i].foldername == currentOpenFolder && folderList[i].folderloc==currentDirectoryTracker.slice(0, currentDirectoryTracker.length-1).join("/")) {
             // console.log(folderList[i]);
-            var theFolder = new AFolder(document.getElementById('folder-name').value);
+            var theFolder = new AFolder(document.getElementById('folder-name').value, [], currentDirectoryTracker.join('/'));
             var theItem = new Item(theFolder);
             folderList[i].addItem(theItem);
             folderList.push(theFolder);
@@ -118,7 +123,7 @@ var displayFolderContents = function() {
     var rowHTML = "";
     var theFolder;
     for(var i = 0; i < folderList.length; i++) {
-        if(folderList[i].foldername == currentOpenFolder) {
+        if(folderList[i].foldername == currentOpenFolder && folderList[i].folderloc==currentDirectoryTracker.slice(0, currentDirectoryTracker.length-1).join("/")) {
             var theFolder = folderList[i];
             if(theFolder.itemlist.length > 0) {
                 for(var j = 0; j < theFolder.itemlist.length; j++) {
@@ -208,7 +213,7 @@ var CreateFileWithContent = function(event) {
     // alert(theFileContent);
     for(var i = 0; i < folderList.length; i++) {
         
-        if(folderList[i].foldername == currentOpenFolder) {
+        if(folderList[i].foldername == currentOpenFolder && folderList[i].folderloc==currentDirectoryTracker.slice(0, currentDirectoryTracker.length-1).join("/")) {
             // console.log(folderList[i]);
             // var theFolder = new AFile(document.getElementById('folder-name').value);
             // var theItem = new Item(theFolder);
@@ -281,7 +286,7 @@ var displayFolderContentsSelect = function() {
     var rowHTML = "";
     var theFolder;
     for(var i = 0; i < folderList.length; i++) {
-        if(folderList[i].foldername == currentOpenFolder) {
+        if(folderList[i].foldername == currentOpenFolder && folderList[i].folderloc==currentDirectoryTracker.slice(0, currentDirectoryTracker.length-1).join("/")) {
             var theFolder = folderList[i];
             if(theFolder.itemlist.length > 0) {
                 for(var j = 0; j < theFolder.itemlist.length; j++) {
@@ -449,7 +454,7 @@ var displayFolderContentsList = function() {
     var rowHTML = "";
     var theFolder;
     for(var i = 0; i < folderList.length; i++) {
-        if(folderList[i].foldername == currentOpenFolder) {
+        if(folderList[i].foldername == currentOpenFolder && folderList[i].folderloc==currentDirectoryTracker.slice(0, currentDirectoryTracker.length-1).join("/")) {
             var theFolder = folderList[i];
             if(theFolder.itemlist.length > 0) {
                 // alert("Here " + theFolder.itemlist.length);
@@ -498,7 +503,7 @@ var displayFolderContentsSelectList = function() {
     var rowHTML = "";
     var theFolder;
     for(var i = 0; i < folderList.length; i++) {
-        if(folderList[i].foldername == currentOpenFolder) {
+        if(folderList[i].foldername == currentOpenFolder && folderList[i].folderloc==currentDirectoryTracker.slice(0, currentDirectoryTracker.length-1).join("/")) {
             var theFolder = folderList[i];
             if(theFolder.itemlist.length > 0) {
                 // alert("Here " + theFolder.itemlist.length);
@@ -566,7 +571,7 @@ var searchAndDisplayResults = function() {
         return;
     }
     for(var i = 0; i < folderList.length; i++) {
-        if(folderList[i].foldername == currentOpenFolder) {
+        if(folderList[i].foldername == currentOpenFolder && folderList[i].folderloc==currentDirectoryTracker.slice(0, currentDirectoryTracker.length-1).join("/")) {
             var theFolder = folderList[i];
             for(var j = 0; j < theFolder.itemlist.length; j++) {
                 var theItem = theFolder.itemlist[j];
@@ -602,7 +607,7 @@ var searchAndDisplayResults = function() {
     for(var x = 0; x < resultarray.length; x++) {
         console.log(theFolder);
         var theItem = resultarray[x];
-        var temp = resultarrayindices[i].split("-");
+        var temp = resultarrayindices[x].split("-");
         var i = temp[0];
         var j = temp[1];
         if(theItem.type == "file") {
