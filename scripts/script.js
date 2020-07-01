@@ -98,6 +98,15 @@ var createFolder = function(event) {
         
         if(folderList[i].foldername == currentOpenFolder && folderList[i].folderloc==currentDirectoryTracker.slice(0, currentDirectoryTracker.length-1).join("/")) {
             // console.log(folderList[i]);
+            for(var j = 0; j < folderList[i].itemlist.length; j++) {
+                
+                if(folderList[i].itemlist[j].type != "file") {
+                    if(folderList[i].itemlist[j].item.foldername == document.getElementById('folder-name').value) {
+                        alert("A folder already exists with same name");
+                        return;
+                    }
+                }
+            }
             var theFolder = new AFolder(document.getElementById('folder-name').value, [], currentDirectoryTracker.join('/'));
             var theItem = new Item(theFolder);
             folderList[i].addItem(theItem);
@@ -220,6 +229,14 @@ var CreateFileWithContent = function(event) {
             // folderList[i].addItem(theItem);
             // folderList.push(theFolder);
             // console.log(folderList[i]);
+            for(var j = 0; j < folderList[i].itemlist.length; j++) {
+                if(folderList[i].itemlist[j].type == "file") {
+                    if(folderList[i].itemlist[j].item.filename == theFileName) {
+                        alert("A file already exists with same name");
+                        return;
+                    }
+                }
+            }
             var temp1 = theFileContent.length;
             var temp2 = theFileContent;
             folderList[i].addItem(new Item(new AFile( theFileName, tempstr.join('/'), temp1, temp2), 'file'));
